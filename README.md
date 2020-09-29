@@ -2,7 +2,7 @@
 This is a dummy order service. User can create, confirm or cancel the order using this service.
 Let's say, user wants to buy something from bol.com, then this service will be used to create and confirm the order.
 
-##End points
+## End points
 1. `create_order` : based on account number & card number this end point, creates an order by, 
     1. Validate if account number & card number and valid amount is present in the request
     2. Get card details (Name, address, gender etc.) from external `card-service`
@@ -19,7 +19,7 @@ Let's say, user wants to buy something from bol.com, then this service will be u
     2. If order exist, then hange the order status to `CANCELLED`
     
 
-##Assignment
+## Assignment
 - Write jUnit tests
 - Write component integration tests
 - Write system integration tests
@@ -29,7 +29,7 @@ Let's say, user wants to buy something from bol.com, then this service will be u
 
 _You can make assumptions when and where needed and please inform those assumptions in the solution_
 
-##To start on local 
+## To start on local 
 1. `mvn spring-boot:run`
 2. Using Postman, request body for 
     1. create_order : 
