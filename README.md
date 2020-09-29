@@ -52,4 +52,4 @@ _You can make assumptions when and where needed and please inform those assumpti
             "orderId":1
         }
         `
-    
+3. swagger-ui is available here : `http://localhost:8080/swagger-ui.html`    

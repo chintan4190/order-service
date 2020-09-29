@@ -53,7 +53,7 @@ public class OrderService {
         order.setCardNumber(createOrderRequest.getCardNumber());
         order.setAmount(createOrderRequest.getAmount());
         order.setCreatedDate(Instant.now());
-        order.setOrderStatus(OrderStatus.CONFIRMED);
+        order.setOrderStatus(OrderStatus.CREATED);
         order.setName(cardInfoResponse.getName());
         order.setGender(cardInfoResponse.getGender());
         return order;
