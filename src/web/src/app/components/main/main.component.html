@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Orders</h2>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <th>Card number</th>
+                <th>Pass number</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th></th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>{{order.cardNumber}}</td>
+                    <td>{{order.passNumber}}</td>
+                    <td>{{order.amount}}</td>
+                    <td>{{order.orderStatus}}</td>
+                    <td><a class="btn btn-default" [routerLink]="['/view', order.orderId]">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a class="btn btn-success" routerLink="/create">Create</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
