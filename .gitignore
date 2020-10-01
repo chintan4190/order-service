@@ -30,4 +30,6 @@ build/
 
 ### VS Code ###
 .vscode/
-
+node_modules
+.idea
+.DS_Store

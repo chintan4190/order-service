@@ -14,12 +14,14 @@ import com.example.demo.message.CreateOrderRequest;
 import com.example.demo.message.CreateOrderResponse;
 import com.example.demo.message.GetBalanceRequest;
 import com.example.demo.repository.OrderRepository;
-import java.time.Instant;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,12 +34,12 @@ public class OrderService {
     private final BalanceService balanceService;
 
     @Transactional
-    public CreateOrderResponse createOrder(CreateOrderRequest request) {
+    public CreateOrderResponse createOrder(final CreateOrderRequest request) {
         log.info("creating order for {}, {} ", request.getCardNumber(), request.getPassNumber());
         validateRequest(request);
-        CardInfoResponse cardInfoResponse = cardService.getCardInfo(new CardInfoRequest(request.getCardNumber(), request.getPassNumber()));
-        Order order = generateOrder(request, cardInfoResponse);
-        Order savedOrder = orderRepository.save(order);
+        final CardInfoResponse cardInfoResponse = this.cardService.getCardInfo(new CardInfoRequest(request.getCardNumber(), request.getPassNumber()));
+        final Order order = generateOrder(request, cardInfoResponse);
+        final Order savedOrder = this.orderRepository.save(order);
 
         return CreateOrderResponse.builder()
                 .creationTime(order.getCreatedDate())
@@ -47,8 +49,12 @@ public class OrderService {
                 .build();
     }
 
-    private Order generateOrder(CreateOrderRequest createOrderRequest, CardInfoResponse cardInfoResponse) {
-        Order order = new Order();
+    public List<Order> findAll() {
+        return this.orderRepository.findAll();
+    }
+
+    private Order generateOrder(final CreateOrderRequest createOrderRequest, final CardInfoResponse cardInfoResponse) {
+        final Order order = new Order();
         order.setPassNumber(createOrderRequest.getPassNumber());
         order.setCardNumber(createOrderRequest.getCardNumber());
         order.setAmount(createOrderRequest.getAmount());
@@ -59,19 +65,19 @@ public class OrderService {
         return order;
     }
 
-    private void validateRequest(CreateOrderRequest createOrderRequest) {
+    private void validateRequest(final CreateOrderRequest createOrderRequest) {
         if (createOrderRequest.getCardNumber() == null || createOrderRequest.getPassNumber() == null) {
             throw new OrderException("Account details can not be null");
         }
     }
 
     @Transactional
-    public ConfirmOrderResponse confirmOrder(ConfirmOrderRequest confirmOrderRequest) {
+    public ConfirmOrderResponse confirmOrder(final ConfirmOrderRequest confirmOrderRequest) {
 
-        Order order = findOrder(confirmOrderRequest.getOrderId());
+        final Order order = findOrder(confirmOrderRequest.getOrderId());
         isValidAccessCode(order.getCardNumber(), order.getPassNumber(), confirmOrderRequest.getAccessCode());
 
-        int availableBalance = balanceService.getBalance(GetBalanceRequest.builder()
+        final int availableBalance = this.balanceService.getBalance(GetBalanceRequest.builder()
                 .cardNumber(order.getCardNumber())
                 .passNumber(order.getPassNumber())
                 .build());
@@ -82,13 +88,13 @@ public class OrderService {
 
     }
 
-    private Order findOrder(Long orderId) {
-        Optional<Order> byId = orderRepository.findById(orderId);
+    public Order findOrder(final Long orderId) {
+        final Optional<Order> byId = this.orderRepository.findById(orderId);
         return byId.orElseThrow(() -> new OrderException("order does not exist with id " + orderId));
     }
 
-    private void isValidAccessCode(String cardNo, String passNo, int accessCode) {
-        boolean isValid = accessCodeVerifierService.isAccessCodeValid(AccessCodeRequest.builder()
+    private void isValidAccessCode(final String cardNo, final String passNo, final int accessCode) {
+        final boolean isValid = this.accessCodeVerifierService.isAccessCodeValid(AccessCodeRequest.builder()
                 .accessCode(accessCode)
                 .cardNumber(cardNo)
                 .passNumber(passNo)
@@ -99,8 +105,8 @@ public class OrderService {
     }
 
     @Transactional
-    public CancelOrderResponse cancelOrder(CancelOrderRequest cancelOrderRequest) {
-        Order order = findOrder(cancelOrderRequest.getOrderId());
+    public CancelOrderResponse cancelOrder(final CancelOrderRequest cancelOrderRequest) {
+        final Order order = findOrder(cancelOrderRequest.getOrderId());
         isValidAccessCode(order.getCardNumber(), order.getPassNumber(), cancelOrderRequest.getAccessCode());
         order.setOrderStatus(OrderStatus.CANCELLED);
         return new CancelOrderResponse(OrderStatus.CANCELLED);

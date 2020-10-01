@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="panel panel-primary" *ngIf="order">
+        <div class="panel-heading">
+            <h2 class="panel-title">Order</h2>
+
+        </div>
+        <div class="panel-body">
+            <label>Order</label>
+            <div class="row">
+                <div class="col-md-3">Status</div>
+                <div class="col-md-9"> {{order.orderStatus}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Card number</div>
+                <div class="col-md-9"> {{order.cardNumber}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Pass number</div>
+                <div class="col-md-9"> {{order.passNumber}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Amount</div>
+                <div class="col-md-9"> {{order.amount}}</div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <a class="btn btn-success" [routerLink]="['/confirm', order.orderId]">Confirm</a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button class="btn btn-danger" [routerLink]="['/cancel', order.orderId]">Cancel Order</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <a class="btn btn-default pull-right" routerLink="/">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

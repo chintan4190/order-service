@@ -1,0 +1,12 @@
+@import './variables';
+@import '~bootstrap-sass/assets/stylesheets/_bootstrap';
+
+.container {
+  margin-top: 20px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 750px;
+  }
+}

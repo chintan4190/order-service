@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Create</h2>
+        </div>
+        <div class="panel-body">
+
+            <form #form="ngForm" (ngSubmit)="create(form.value)">
+                <label>Order</label>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Card Number" name="cardNumber"
+                                   ngModel required/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Pass Number" name="passNumber"
+                                   ngModel required/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Amount" name="amount" ngModel
+                                   required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <button class="btn btn-success" [disabled]="form.invalid || form.submitted" type="submit">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a class="btn btn-default pull-right" routerLink="/">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
