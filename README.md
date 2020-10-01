@@ -3,26 +3,24 @@ This is a dummy order service. User can create, confirm or cancel the order usin
 Let's say, user wants to buy something from bol.com, then this service will be used to create and confirm the order.
 
 ## End points
-1. `create` : based on account number & card number this end point, creates an order by, 
+1. `order/create` : based on account number & card number this end point, creates an order by, 
     1. Validate if account number & card number and valid amount is present in the request
     2. Get card details (Name, address, gender etc.) from external `card-service`
     3. Update name, address, gender in Order table
     4. Set order status to `CREATED`
-2. `confirm` : once user wants to proceed, this service confirms the order by 
+2. `order/confirm` : once user wants to proceed, this service confirms the order by 
     1. Validate the order id
     2. Validate the access-code from external service `access-code-verifier`
     3. Call `balance-service` service to get balance for this user
     4. Validate if user has enough balance to proceed
     5. If access-code is valid & balance is available then change the order status to `CONFIRMED`
-3. `cancel` : if user wants to cancel order by order id then,
+3. `order/cancel` : if user wants to cancel order by order id then,
     1. Validate the order id
     2. If order exist, then hange the order status to `CANCELLED`
     
 
 ## Assignment
-- Write jUnit tests
-- Write component integration tests
-- Write system integration tests
+- Write tests for the application (you can use any test framework)
 - Find out the bugs developers has made and if possible, suggest improvement or fixes
 - Bonus points if you find out security related bugs or improvements
 - Bonus point if you can automate the system integration part (using any containers or cicd tools available or any other way )
